@@ -1,1 +1,1 @@
-# codejam_saphanasqlgeospatial
+# SAP CodeJam - SAP HANA Geospatial
