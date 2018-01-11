@@ -2,19 +2,19 @@
 
 2. Import ZIP with code
 
-![import zip](img\import_zip.png)
+![import zip](img/import_zip.png)
 
 ZIP contains CSV files coming from https://openbeerdb.com/ under [Database Contents License (DbCL) v1.0](https://opendatacommons.org/licenses/dbcl/1.0/)
 
 2. Set the space to `Development` for the project `codejamgeo`
 
-![set the space](img\set_the_space.png)
+![set the space](img/set_the_space.png)
 
 3. Build HDB module `vitaldb`
 
 4. Switch to the Database Explorer tool in Web IDE and add the database, like `XSA_DEV-btuib21w5cia6c82-codejamgeo-hdi_vitaldb` of the type __HDI Container__ to the explorer.
 
-![add the db](img\add_database.png)
+![add the db](img/add_database.png)
 
 5. Check select of data from the view
 
