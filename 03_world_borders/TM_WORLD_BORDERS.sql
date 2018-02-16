@@ -12,15 +12,3 @@ and a."SHAPE".st_srid(1000004326).ST_Touches(b.shape.st_srid(1000004326)) = 1
 order by "border" desc;
 
 --compare to the length in the straight line
-
--- Analyzing countries and continents
---Find continents where Turkey is
-
---Find all trascontinental countries
-select b.name, count(*) as "count"
- from "TESTSGEO"."continent" a
- join "TESTSGEO"."TM_WORLD_BORDERS-0.3" b on 1=1
- where b.shape.st_srid(1000004326).st_intersects(a.shape) = 1
- group by b.name
- having count(*) > 1
- order by 1, 2;
