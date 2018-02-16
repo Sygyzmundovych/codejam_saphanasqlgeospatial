@@ -1,4 +1,4 @@
-1. Logon to HANA Web IDE (here: as a user XSA_DEV)
+1. In HANA Express (version >= 2.00.22) logon to HANA Web IDE (here: as a user XSA_DEV)
 
 2. Import ZIP with code
 
