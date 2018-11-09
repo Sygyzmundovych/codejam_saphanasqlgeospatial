@@ -1,8 +1,8 @@
---CREATE SCHEMA TESTSGEO;
-SET SCHEMA TESTSGEO;
+--CREATE SCHEMA OPENBEERDB;
+SET SCHEMA OPENBEERDB;
 
-DROP TABLE "TESTSGEO"."BREWERIES_GEO" ;
-CREATE COLUMN TABLE "TESTSGEO"."BREWERIES_GEO" (
+DROP TABLE "OPENBEERDB"."BREWERIES_GEO" ;
+CREATE COLUMN TABLE "OPENBEERDB"."BREWERIES_GEO" (
 "id" SMALLINT NOT NULL, 
 "brewery_id" SMALLINT NOT NULL, 
 "latitude" DECIMAL(12,4) NOT NULL, 
@@ -14,21 +14,21 @@ PRIMARY KEY ("id")
 );
 
 --File to import must be in $DIR_INSTANCE/work (note 2109565)
-IMPORT FROM CSV FILE '/usr/sap/HXE/HDB90/work/openbeerdb_csv/breweries_geocode.csv' 
-INTO "TESTSGEO"."BREWERIES_GEO"
+IMPORT FROM CSV FILE '/usr/sap/HXE/HDB90/work/DB_HXE/openbeerdb_csv/breweries_geocode.csv' 
+INTO "OPENBEERDB"."BREWERIES_GEO"
 WITH SKIP FIRST 1 ROW;
 
 --Populate 
-update "TESTSGEO"."BREWERIES_GEO"
+update "OPENBEERDB"."BREWERIES_GEO"
 set "loc_4326" = ST_GeomFromText('POINT ('||"longitude"||' '||"latitude"||')',4326);
 
-update "TESTSGEO"."BREWERIES_GEO"
+update "OPENBEERDB"."BREWERIES_GEO"
 set "loc_3857" = "loc_4326".ST_Transform(3857);
 
 commit;
 
---DROP TABLE "TESTSGEO"."BREWERIES" ;
-CREATE COLUMN TABLE "TESTSGEO"."BREWERIES"(
+DROP TABLE "OPENBEERDB"."BREWERIES" ;
+CREATE COLUMN TABLE "OPENBEERDB"."BREWERIES"(
 	"id" SMALLINT NOT NULL,
 	"name" NVARCHAR(64),
 	"address1" NVARCHAR(64),
@@ -51,13 +51,13 @@ CREATE COLUMN TABLE "TESTSGEO"."BREWERIES"(
 select length('Krungthepmahanakhon Amonrattanakosin Mahintharayutthaya Mahadilokphop Noppharatratchathaniburirom Udomratchaniwetmahasathan Amonphimanawatansathit Sakkathattiyawitsanukamprasit') from dummy;
 
 --File to import must be in $DIR_INSTANCE/work (note 2109565)
-IMPORT FROM CSV FILE '/usr/sap/HXE/HDB90/work/openbeerdb_csv/breweries.csv' 
-INTO "TESTSGEO"."BREWERIES"
+IMPORT FROM CSV FILE '/usr/sap/HXE/HDB90/work/DB_HXE/openbeerdb_csv/breweries.csv' 
+INTO "OPENBEERDB"."BREWERIES"
 WITH SKIP FIRST 1 ROW;
 
 --Create a view
---DROP VIEW "TESTSGEO"."V_BREWERIES_GEO";
-create view "TESTSGEO"."V_BREWERIES_GEO" as 
+--DROP VIEW "OPENBEERDB"."V_BREWERIES_GEO";
+create view "OPENBEERDB"."V_BREWERIES_GEO" as 
 select 
 T0."brewery_id",
 T0."loc_4326",
@@ -69,7 +69,7 @@ T1."city",
 T1."state",
 T1."country"
  from 
-"TESTSGEO"."BREWERIES_GEO" T0 inner join "TESTSGEO"."BREWERIES" T1
+"OPENBEERDB"."BREWERIES_GEO" T0 inner join "OPENBEERDB"."BREWERIES" T1
  on  T0."brewery_id" = T1."id";
  
 --Check select
@@ -83,4 +83,4 @@ SELECT TOP 10
 	"city",
 	"state",
 	"country"
-FROM "TESTSGEO"."V_BREWERIES_GEO";
+FROM "OPENBEERDB"."V_BREWERIES_GEO";
